@@ -1,17 +1,27 @@
-class API{
-  static saveData(key: string, data: any): void {
-    const jsonData = JSON.stringify(data);
-    localStorage.setItem(key, jsonData);
+export class LocalStorageAPI{
+
+  constructor(_url: string){
+    
   }
 
-  static getData(key: string): any | null {
-    const jsonData = localStorage.getItem(key);
-    return jsonData ? JSON.parse(jsonData) : null;
+  public getProject<T>(key: string): T | null {
+    const item = localStorage.getItem(key);
+
+    if (item === null) return null;
+
+    const response: T = JSON.parse(item);
+    return response;
   }
 
-  static deleteData(key: string): void{
+  public createProject(key: string, value: any): void {
+    localStorage.setItem(key, JSON.stringify(value))
+  }
+
+  static saveProject(key: any, value: any): void {
+    localStorage.setItem(key.uuid, JSON.stringify(value));
+  }
+
+  static deleteProject(key: string): void{
     localStorage.removeItem(key);
   }
 }
-
-export default API;
